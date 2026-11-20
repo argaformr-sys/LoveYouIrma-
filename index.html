@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>MY FIRST LOVE LETTER — Special For Irma 🩷</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <!-- Three.js for 3D Teddy Bear, 3D Pink Gift Box & 3D Particles -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+  <!-- Background Music (Otomatis Nyala & Loop) -->
+  <audio id="bg-music" src="lagu-romantis.mp3" preload="auto" loop autoplay></audio>
+
+  <!-- Floating Music Control Pill -->
+  <div id="music-widget" class="glass-pill" aria-label="Kontrol Musik Romantis">
+    <button id="music-toggle-btn" class="heart-music-btn playing" title="Play / Pause Musik">
+      <svg viewBox="0 0 32 32" class="heart-svg">
+        <path d="M16 28.5C16 28.5 3 20.2 3 10.8C3 6.5 6.4 3.5 10.3 3.5C12.8 3.5 15 4.8 16 6.8C17 4.8 19.2 3.5 21.7 3.5C25.6 3.5 29 6.5 29 10.8C29 20.2 16 28.5 16 28.5Z" />
+      </svg>
+      <span id="music-icon-symbol">🎵</span>
+    </button>
+    <div class="volume-wrap">
+      <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.85" aria-label="Volume Musik" />
+    </div>
+  </div>
+
+  <!-- Ambient Glitter & Falling Hearts Canvas -->
+  <canvas id="ambient-canvas"></canvas>
+
+  <!-- 3D Mascot & Stage Canvas (Always interactive) -->
+  <canvas id="three-canvas"></canvas>
+
+  <!-- Cute Teddy Speech Bubble & Random Sweet Messages -->
+  <div id="mascot-bubble" class="mascot-bubble hidden">
+    <span id="mascot-bubble-text">Haiii Sayang! 🥺</span>
+  </div>
+
+  <!-- =========================================================
+       STAGE 1: LOADING SCREEN 💗
+       ========================================================= -->
+  <section id="stage-loading" class="stage active">
+    <div class="loading-overlay">
+      <div class="teddy-stage-spacer"></div>
+      <div class="heart-loader-wrap">
+        <div class="heart-pulse"></div>
+        <div class="loading-bar-track">
+          <div id="loading-bar-fill" class="loading-bar-fill"></div>
+        </div>
+      </div>
+      <h1 class="loading-title">Bentar ya Sayang.. 💗</h1>
+      <p class="loading-sub">Menyiapkan dunia kecil penuh cinta untuk Irma...</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       STAGE 2: KOTAK HADIAH 3D PINK 🎁
+       ========================================================= -->
+  <section id="stage-gift" class="stage hidden">
+    <div class="gift-ui-top">
+      <span class="badge-love">✨ Special Surprise For Irma ✨</span>
+      <h2 class="gift-headline">For You, My Love</h2>
+      <p class="gift-hint">Sentuh kotak hadiah pink atau tekan tombol di bawah ya!</p>
+    </div>
+    <div class="gift-stage-spacer" id="gift-tap-zone" title="Sentuh Kotak Hadiah"></div>
+    <div class="gift-ui-bottom">
+      <button id="open-gift-btn" class="btn-romantic-primary">
+        <span>BUKA HADIAH CINTAKU 💌</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       STAGE 3: TAMAN BUNGA 2D, AMPLOP, SURAT, GALERI & WA
+       ========================================================= -->
+  <main id="stage-main" class="stage-scroll hidden">
+    <!-- 2D Blooming Flower Garden & Cute Companions -->
+    <section class="garden-hero-section">
+      <div class="garden-sky-glow"></div>
+      <div id="flower-garden-2d" class="flower-garden-2d"></div>
+      <div id="butterfly-layer" class="butterfly-layer"></div>
+
+      <!-- Interactive 2D Vector Companions (Rabbit, Sleeping Cat, Walking Duck) -->
+      <div class="companions-bar">
+        <button class="companion-card" data-animal="rabbit" title="Sentuh Kelinci Lucu">
+          <svg viewBox="0 0 120 120" class="companion-svg rabbit-anim">
+            <!-- Ears -->
+            <ellipse cx="44" cy="30" rx="10" ry="26" fill="#ffffff" stroke="#f8bbd0" stroke-width="3"/>
+            <ellipse cx="44" cy="30" rx="5" ry="19" fill="#ffc1d6"/>
+            <ellipse cx="76" cy="30" rx="10" ry="26" fill="#ffffff" stroke="#f8bbd0" stroke-width="3"/>
+            <ellipse cx="76" cy="30" rx="5" ry="19" fill="#ffc1d6"/>
+            <!-- Pink Ribbon -->
+            <path d="M52 50 L40 43 L43 56 Z" fill="#ff5c97"/>
+            <path d="M68 50 L80 43 L77 56 Z" fill="#ff5c97"/>
+            <circle cx="60" cy="50" r="5" fill="#ff2e7a"/>
+            <!-- Head -->
+            <circle cx="60" cy="76" r="28" fill="#ffffff" stroke="#f8bbd0" stroke-width="3"/>
+            <!-- Eyes & Cheeks -->
+            <circle cx="49" cy="73" r="4" fill="#3a2330"/>
+            <circle cx="50.5" cy="71.5" r="1.4" fill="#ffffff"/>
+            <circle cx="71" cy="73" r="4" fill="#3a2330"/>
+            <circle cx="72.5" cy="71.5" r="1.4" fill="#ffffff"/>
+            <ellipse cx="42" cy="81" rx="5" ry="3" fill="#ff9ebb" opacity="0.7"/>
+            <ellipse cx="78" cy="81" rx="5" ry="3" fill="#ff9ebb" opacity="0.7"/>
+            <polygon points="57,80 63,80 60,84" fill="#ff7aa8"/>
+            <path d="M54 86 Q60 91 66 86" fill="none" stroke="#3a2330" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+          <span class="companion-tag">Kelinci Pita</span>
+        </button>
+
+        <button class="companion-card" data-animal="cat" title="Sentuh Kucing Tidur">
+          <svg viewBox="0 0 120 120" class="companion-svg cat-anim">
+            <!-- Tail -->
+            <path d="M88 86 Q108 75 102 60" fill="none" stroke="#f3c69f" stroke-width="9" stroke-linecap="round"/>
+            <!-- Body -->
+            <ellipse cx="62" cy="84" rx="34" ry="20" fill="#ffe0c2" stroke="#e8b88c" stroke-width="3"/>
+            <!-- Head -->
+            <circle cx="46" cy="72" r="22" fill="#ffe0c2" stroke="#e8b88c" stroke-width="3"/>
+            <!-- Ears -->
+            <polygon points="28,58 32,38 44,52" fill="#ffe0c2" stroke="#e8b88c" stroke-width="2.5"/>
+            <polygon points="64,58 60,38 48,52" fill="#ffe0c2" stroke="#e8b88c" stroke-width="2.5"/>
+            <!-- Sleeping Eyes -->
+            <path d="M35 72 Q40 77 45 72" fill="none" stroke="#4a3228" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M50 72 Q55 77 60 72" fill="none" stroke="#4a3228" stroke-width="2.4" stroke-linecap="round"/>
+            <ellipse cx="33" cy="77" rx="4" ry="2.5" fill="#ff9ebb" opacity="0.75"/>
+            <ellipse cx="61" cy="77" rx="4" ry="2.5" fill="#ff9ebb" opacity="0.75"/>
+            <polygon points="45,76 49,76 47,79" fill="#ff7aa8"/>
+            <text x="74" y="45" fill="#ff5c97" font-size="14" font-weight="bold" class="zzz-text">zZ</text>
+          </svg>
+          <span class="companion-tag">Kucing Tidur</span>
+        </button>
+
+        <button class="companion-card" data-animal="duck" title="Sentuh Bebek Kuning">
+          <svg viewBox="0 0 120 120" class="companion-svg duck-anim">
+            <!-- Feet -->
+            <path d="M48 98 L42 108 L54 108 Z" fill="#ff8f00"/>
+            <path d="M70 98 L64 108 L76 108 Z" fill="#ff8f00"/>
+            <!-- Body -->
+            <ellipse cx="60" cy="80" rx="28" ry="21" fill="#ffe066" stroke="#f5c518" stroke-width="3"/>
+            <!-- Wing -->
+            <path d="M48 76 Q62 70 72 82 Q60 90 48 76 Z" fill="#ffd43b" stroke="#f5c518" stroke-width="2"/>
+            <!-- Head -->
+            <circle cx="58" cy="48" r="20" fill="#ffe066" stroke="#f5c518" stroke-width="3"/>
+            <!-- Hair tuft -->
+            <path d="M56 28 Q52 18 60 22 Q64 16 64 28" fill="none" stroke="#f5c518" stroke-width="3" stroke-linecap="round"/>
+            <!-- Eye & Cheek -->
+            <circle cx="51" cy="45" r="3.6" fill="#3a2330"/>
+            <circle cx="52" cy="44" r="1.2" fill="#ffffff"/>
+            <ellipse cx="66" cy="51" rx="4.5" ry="2.6" fill="#ff9ebb" opacity="0.75"/>
+            <!-- Beak -->
+            <ellipse cx="42" cy="52" rx="9" ry="5" fill="#ff922b"/>
+          </svg>
+          <span class="companion-tag">Bebek Lucu</span>
+        </button>
+      </div>
+
+      <!-- Envelope Section -->
+      <div id="envelope-wrapper" class="envelope-section">
+        <div id="love-envelope" class="envelope-card" role="button" tabindex="0" aria-label="Buka Amplop Surat Cinta">
+          <div class="envelope-light-burst"></div>
+          <div class="envelope-back"></div>
+          <div class="envelope-letter-preview">
+            <span>Untuk Irma Tersayang...</span>
+          </div>
+          <div class="envelope-front"></div>
+          <div class="envelope-flap"></div>
+          <!-- Floral & Ribbon Ornaments -->
+          <div class="envelope-flower ef-left">🌸</div>
+          <div class="envelope-flower ef-right">🌷</div>
+          <div class="envelope-ribbon"></div>
+          <!-- Heart Seal -->
+          <div class="heart-seal" id="heart-seal-btn">
+            <span>💗</span>
+          </div>
+          <div class="envelope-label">
+            <p class="env-title">For My Beautiful Irma</p>
+            <p class="env-tap-hint">Sentuh segel hati untuk membuka surat 💌</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         STAGE 4: ISI SURAT CINTA 💌
+         ========================================================= -->
+    <section id="letter-section" class="letter-section hidden-reveal">
+      <div class="letter-paper glass-cream">
+        <div class="corner-flower cf-tl">🌸</div>
+        <div class="corner-flower cf-tr">🌺</div>
+        <div class="corner-flower cf-bl">🌷</div>
+        <div class="corner-flower cf-br">🌸</div>
+
+        <div class="letter-header">
+          <span class="letter-date-badge">My First Love Letter 💌</span>
+        </div>
+
+        <div id="letter-body" class="letter-content">
+          <p class="letter-para" data-delay="0">Kamu kok makin hari makin Cantik sih Jadi Kangen Masa masa kita dulu Ehh kamu Nyadar ngak ada yang beda Di hubungan kita ,ya betul... Hubungan kita makin sepesial 🩷</p>
+
+          <p class="letter-para" data-delay="1">Hehehe kamu bingung kenapa aku bikin kayak Gini ?</p>
+
+          <p class="letter-para" data-delay="2">Aku itu bikin Kayak Gini biar Hubungan Kita makin Erat</p>
+
+          <p class="letter-para" data-delay="3">Aku udah Effort Loh Bikin Ini Masak kamu ngak🙃.</p>
+
+          <p class="letter-para highlight-love" data-delay="4">AKU CUMA MAU BILANG SEBENARNYA NYA I REALLY LOVE YOU🤪</p>
+
+          <p class="letter-para question-love" data-delay="5">Do You Love Me Too?</p>
+
+          <p class="letter-para signature-love" data-delay="6">🩷FOR YOU IRMA🩷</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         STAGE 5: GALERI FOTO KENANGAN 📸 (Our Little Memories 🩷)
+         ========================================================= -->
+    <section id="gallery-section" class="gallery-section hidden-reveal">
+      <div class="section-heading-wrap">
+        <span class="mini-pill">📸 Kenangan Manis Kita</span>
+        <h2 class="gallery-title">Our Little Memories 🩷</h2>
+        <p class="gallery-subtitle">Sentuh foto untuk melihat lebih besar ya, Cantik ✨</p>
+      </div>
+
+      <div class="polaroid-collage" id="polaroid-collage">
+        <figure class="polaroid-card tilt-left" data-src="foto1.jpg" data-caption="Momen manis yang selalu bikin kangen 🩷">
+          <div class="polaroid-tape"></div>
+          <div class="polaroid-img-box">
+            <img src="foto1.jpg" alt="Kenangan Irma 1" loading="lazy" />
+          </div>
+          <figcaption class="polaroid-caption">Sweetest Smile 💗</figcaption>
+          <span class="polaroid-deco">🌸</span>
+        </figure>
+
+        <figure class="polaroid-card tilt-right" data-src="foto2.jpg" data-caption="Lucu banget sih kamu di sini 🤪🩷">
+          <div class="polaroid-tape"></div>
+          <div class="polaroid-img-box">
+            <img src="foto2.jpg" alt="Kenangan Irma 2" loading="lazy" />
+          </div>
+          <figcaption class="polaroid-caption">Always Cute ✨</figcaption>
+          <span class="polaroid-deco">💖</span>
+        </figure>
+
+        <figure class="polaroid-card tilt-slight-left" data-src="foto3.jpg" data-caption="Makin hari makin cantik aja 🌸">
+          <div class="polaroid-tape"></div>
+          <div class="polaroid-img-box">
+            <img src="foto3.jpg" alt="Kenangan Irma 3" loading="lazy" />
+          </div>
+          <figcaption class="polaroid-caption">My Favorite Person 🌷</figcaption>
+          <span class="polaroid-deco">🩷</span>
+        </figure>
+
+        <figure class="polaroid-card tilt-slight-right" data-src="foto4.jpg" data-caption="Spesial banget di hatiku 💞">
+          <div class="polaroid-tape"></div>
+          <div class="polaroid-img-box">
+            <img src="foto4.jpg" alt="Kenangan Irma 4" loading="lazy" />
+          </div>
+          <figcaption class="polaroid-caption">Special Memories 💌</figcaption>
+          <span class="polaroid-deco">🌺</span>
+        </figure>
+
+        <figure class="polaroid-card tilt-center" data-src="foto5.jpg" data-caption="Forever my favorite view 🥰🩷">
+          <div class="polaroid-tape"></div>
+          <div class="polaroid-img-box">
+            <img src="foto5.jpg" alt="Kenangan Irma 5" loading="lazy" />
+          </div>
+          <figcaption class="polaroid-caption">For You Irma 🩷</figcaption>
+          <span class="polaroid-deco">✨</span>
+        </figure>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         STAGE 6: TOMBOL BALAS MELALUI WHATSAPP 💬
+         ========================================================= -->
+    <section id="whatsapp-section" class="whatsapp-section hidden-reveal">
+      <div class="wa-card glass-card">
+        <div class="wa-hearts-top">💗 ✨ 💗</div>
+        <h2 class="wa-title">SO, DO YOU LOVE ME TOO? 🥺🩷</h2>
+        <p class="wa-subtitle">Kalau kamu punya jawaban, aku tunggu ya, Sayang.</p>
+        <button id="wa-reply-btn" class="btn-whatsapp-love">
+          <span>BALAS AKU DI WHATSAPP 💗</span>
+        </button>
+      </div>
+    </section>
+
+    <footer class="love-footer">
+      <p>Made with all my love for <strong>IRMA 🩷</strong></p>
+    </footer>
+  </main>
+
+  <!-- Photo Lightbox Modal (Preserves original aspect ratio) -->
+  <div id="photo-lightbox" class="lightbox hidden" role="dialog" aria-modal="true">
+    <div class="lightbox-backdrop" id="lightbox-close-bg"></div>
+    <div class="lightbox-content">
+      <button id="lightbox-close-btn" class="lightbox-close" aria-label="Tutup Foto">✕</button>
+      <img id="lightbox-img" src="" alt="Foto Kenangan Irma" />
+      <p id="lightbox-caption" class="lightbox-caption"></p>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
